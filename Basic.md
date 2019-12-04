@@ -10,6 +10,8 @@
         $password = trim(mysqli_real_escape_string($connection, $_POST['password'])); 
 ?> // php file所有都要加这个结尾
 ```
+$ 所有的variable都要加这个符号在前面
+$_POST 这个格式的variable说明是global variable
 mysqli_real_escape_string(connection,escapestring) 第一个connection会指向include的database， 第二个参数是一个string  
 mysqli_real_escape_string 转义在 SQL 语句中使用的字符串中的特殊字符
 
@@ -20,3 +22,13 @@ mysqli_real_escape_string 转义在 SQL 语句中使用的字符串中的特殊�
 <input id="show-btn" type="submit" name="submit" value="Login"/>
 </form>
 ```
+
+# 2. If statement & throw Error message
+```php
+if (!isset($username) || $username == '' || !isset($password) || $password == '') {
+    $error = "Please fill in your username and password to log in"; // 这个是一个string variable
+    header("Location: ../../frontend/Validate/new/loginForm.php?error=" . urlencode($error)); // 显示error message
+    exit(); // 如果call了一个网站，要记得exit
+}
+```
+$item_id = mysqli_insert_id($connection) 返回最后一次查询中的 ID，connection参数指向连接的database
