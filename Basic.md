@@ -27,7 +27,7 @@ mysqli_real_escape_string 转义在 SQL 语句中使用的字符串中的特殊�
 ```php
 if (!isset($username) || $username == '' || !isset($password) || $password == '') {
     $error = "Please fill in your username and password to log in"; // 这个是一个string variable
-    header("Location: ../../frontend/Validate/new/loginForm.php?error=" . urlencode($error)); // 显示error message
+    header("Location: ../../frontend/Validate/new/loginForm.php?error=" . urlencode($error)); // 跳到某个网页，显示error message
     exit(); // 如果call了一个网站，要记得exit
 }
 ```
@@ -42,3 +42,18 @@ $check = mysqli_num_rows($result); // mysqli_num_rows(variable) 返回结果的n
 die(status) 函数是 exit() 函数的别名, 如果 status 是字符串，则该函数会在退出前输出字符串  
 mysqli_error() 函数返回一个string，最近调用函数的最后一个错误描述  
 $item_id = mysqli_insert_id($connection) 返回最后一次查询中的 ID，connection参数指向连接的database  
+
+# 4. 
+```php
+$row = mysqli_fetch_array($result); // 返回result中的一行
+if ($row['username'] == $username && password_verify($password, $row['passwordhash'])) {
+    $_SESSION['userid'] = $row['userid']; // set the global variable
+    $_SESSION['username'] = $username;
+    setcookie('userid', $row['userid'], time() + (60*60*24*30)); //
+    setcookie('username', $row['username'], time() + (60*60*24*30));
+    mysqli_close($connection); // connection 用完了要close
+    header('Location: ../../frontend/Validate/new/home.php'); // 会跳到personal homepage
+    exit();
+    }
+```
+bool password_verify ( string $password , string $hash ) 返回bool，会根据hash func 来 verify 两个password是否match
