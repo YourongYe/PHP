@@ -16,8 +16,8 @@ mysqli_real_escape_string(connection,escapestring) 第一个connection会指向i
 mysqli_real_escape_string 转义在 SQL 语句中使用的字符串中的特殊字符
 
 ```html
-<form method="post" action="../../login.php">
-<input type="text" id="username" name="username" placeholder="Enter Your Username"/>
+<form method="post" action="../../login.php"> <! –– method对应$_POST, action对应要传input的php file ––>
+<input type="text" id="username" name="username" placeholder="Enter Your Username"/> <! –– name对应$_POST['username'] ––>
 <input type="password" id="password" name="password" placeholder="Enter Your Password"/>
 <input id="show-btn" type="submit" name="submit" value="Login"/>
 </form>
