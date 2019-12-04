@@ -31,4 +31,14 @@ if (!isset($username) || $username == '' || !isset($password) || $password == ''
     exit(); // 如果call了一个网站，要记得exit
 }
 ```
-$item_id = mysqli_insert_id($connection) 返回最后一次查询中的 ID，connection参数指向连接的database
+
+# 3. Use PHP to call SQL query
+```php
+$query = "SELECT userid, username, passwordhash FROM Users WHERE username = '$username'" ; // 先把query存在一个string里
+$result = mysqli_query($connection, $query) // mysqli_query($connection, $query) 第一个参数connect database， 第二个参数是string格式的query，把返回的结果存在result variable 中
+  or die('Error making select users query' . mysqli_error($connection)); // php里的string拼接用的是. 相当于python里的 ，或者 +
+$check = mysqli_num_rows($result); // mysqli_num_rows(variable) 返回结果的number of rows
+```
+die(status) 函数是 exit() 函数的别名, 如果 status 是字符串，则该函数会在退出前输出字符串  
+mysqli_error() 函数返回一个string，最近调用函数的最后一个错误描述  
+$item_id = mysqli_insert_id($connection) 返回最后一次查询中的 ID，connection参数指向连接的database  
